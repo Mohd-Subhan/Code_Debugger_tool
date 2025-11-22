@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Code Debugger Tool</title>
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+    <header>
+        <a href="#" id="showFeaturesLink">Show Features</a>
+        <nav>
+            <!-- Your other nav items -->
+        </nav>
+    </header>
+    <div id="features-popup" class="popup">
+        <div class="popup-content">
+            <h2>Features</h2>
+            <ul>
+                
+                <li>Code Debugging: Debug code in multiple languages and view output.</li>
+                <li>Execution Visualization: Visualize code execution steps (Python only).</li>
+                <li>Question Generation: Automatically generate questions based on code.</li>
+                <li>Auto-correct: Automatically correct code errors and provide suggestions.</li>
+                <li>Clipboard Integration: Copy and paste code directly from clipboard.</li>
+                <li>Watch History: Save and manage a history of code executions.</li>
+                <li>Interactive Interface: Toggle features like visualizer and question generation.</li>
+            </ul>
+            <button id="closePopupBtn">Close</button>
+        </div>
+    </div>
+    <h2>Code Debugger Tool</h2>
+    <i
+        class="fas fa-history"
+        id="watch-history-icon"
+        onclick="toggleWatchHistory()"
+    ></i>
+
+    <div id="watch-history">
+        <button onclick="clearHistory()">Clear History</button>
+        <ul id="watch-history-list"></ul>
+    </div>
+
+    <div class="confirmation" id="history-confirmation" style="display: none">
+        <p>Are you sure you want to paste this code into the compiler?</p>
+        <div class="confirmation-buttons">
+            <button id="history-confirm-yes">Yes</button>
+            <button id="history-confirm-no">No</button>
+        </div>
+    </div>
+
+    <div class="confirmation" id="clear-history-confirmation" style="display: none">
+        <p>Are you sure you want to clear the history?</p>
+        <div class="confirmation-buttons">
+            <button id="clear-history-yes">Yes</button>
+            <button id="clear-history-no">No</button>
+        </div>
+    </div>
+
+    <div class="confirmation" id="confirmation" style="display: none">
+        <p>Your code is wrong. Do you want the correct code?</p>
+        <div class="confirmation-buttons">
+            <button onclick="getCorrectCode()">Yes</button>
+            <button onclick="dismissConfirmation()">No</button>
+        </div>
+    </div>
+
+    <div class="marquee">
+        <span>Questions will be dynamically generated based on your code</span>
+    </div>
+
+    <div class="container" id="main-container">
+        <div id="debugger">
+            <div class="textarea-container">
+                <textarea
+                    id="code"
+                    placeholder="Enter your code here..."
+                    oninput="autoResize(this)"
+                    spellcheck="false"
+                ></textarea>
+                <i
+                    class="fas fa-paste paste-icon"
+                    id="pasteCodeBtn"
+                    onclick="pasteText('code')"
+                ></i>
+            </div>
+            <select id="language">
+                <option value="python">Python</option>
+                <option value="cpp">C++</option>
+                <option value="c">C</option>
+            </select>
+            <input
+                type="text"
+                id="user-input"
+                placeholder="Enter your input here (if applicable)"
+            />
+            <div class="button-group">
+                <button id="runCodeBtn" onclick="debugCode()">
+                    <span id="buttonText">Run Code</span>
+                </button>
+                <button
+                    id="autoCorrectBtn"
+                    style="display: none"
+                    onclick="autoCorrectCode()"
+                >
+                    <span id="autoCorrectText">Correct Code</span>
+                </button>
+            </div>
+            <div id="output">Your output will be displayed here</div>
+            <div class="output-section">
+                <strong>Corrected Code:</strong>
+                <div class="textarea-container">
+                    <pre id="corrected-code" spellcheck="false"></pre>
+                    <i
+                        class="fas fa-copy copy-icon"
+                        id="copyCorrectedCodeBtn"
+                        onclick="copyText('corrected-code')"
+                        style="display: none"
+                    ></i>
+                </div>
+            </div>
+        </div>
+
+        <div id="right-side">
+            <div id="questions">
+                <strong>Generated Questions:</strong>
+                <i class="fas fa-toggle-off" id="questions-toggle"></i>
+                <div class="spinner" id="spinner" style="display: none"></div>
+                <ul id="questions-list"></ul>
+            </div>
+
+            <div id="visualization">
+                <strong>Code Visualization: (python support)</strong>
+                <i class="fas fa-toggle-off" id="visualizer-toggle"></i>
+                <div id="visualization-output"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

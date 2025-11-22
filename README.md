@@ -21,3 +21,4 @@ Scalable Design — Can support multiple programming languages.
 Purpose
 
 To help students and developers debug faster, learn effectively, and strengthen their coding foundation through interactive assistance.
+# code_debugger_tool
